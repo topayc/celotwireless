@@ -1,0 +1,644 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<!-- 호환성 모드로 인해 발생하는 문제 수정을 위해서 호환성 보기 고정 --> 
+		<meta http-equiv="X-UA-Compatible" content="IE=9">
+		<title>Google Map</title>
+		<style type="text/css">
+			html, body, #map-canvas {
+				height: 100%;
+				margin: 0px;
+				padding: 0px;
+				height: 100%;
+			}
+
+			html {
+				height: 100%;
+				margin: 0px;
+				padding: 0px;
+			}
+			body {
+				height: 100%;
+				margin: 0px;
+				padding: 0px;
+				font-size: 9pt;
+			}
+			#map_canvas {
+				width: 100%;
+				height: 100%
+			}
+
+			input {
+				font-size: 9pt;
+			}
+		</style>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&region=KR"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+		<script type="text/javascript"  src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+
+		<script type="text/javascript">
+			var isExtend = false;
+			var map;
+			var markers = [];
+			var infowindows = [];
+			
+			var markerList = [];
+            //{
+            	//session : 1111111,
+            	//marker : marjer,
+            	//infowindow : infowindow
+            //} 
+            
+			function layerEnableOnMap(enable) {
+				if (enable) {
+					$("#router_info_panel").draggable();
+					$("#folder-extender").click(function() {
+						if (isExtend) {
+							$("#folder-extender").html("▼");
+							$("#router_content").slideUp('fast');
+							isExtend = false;
+						} else {
+							$("#folder-extender").html("▲");
+							$("#router_content").slideDown('fast');
+							isExtend = true;
+						}
+					});
+					$("#router_content").hide();
+				} else {
+					$("#router_info_panel").hide();
+				}
+			}
+
+			
+			// 맵 초기화
+			function initialize(x, y) {
+				if (x == 0) {
+					x = 37.50075507977441;
+				}
+				if (y == 0) {
+					y = 127.03690767288208;
+				}
+
+				geocoder = new google.maps.Geocoder();
+				var latlng = new google.maps.LatLng(x, y);
+				var myOptions = {
+					zoom : 15,
+					//disableDoubleClickZoom:false,
+					center : latlng,
+					navigationControl : false, // 눈금자 형태로 스케일 조절하는 컨트롤 활성화 선택.
+					navigationControlOptions : {
+						position : google.maps.ControlPosition.TOP_RIGHT,
+						style : google.maps.NavigationControlStyle.DEFAULT // ANDROID, DEFAULT, SMALL, ZOOM_PAN
+					},
+					streetViewControl : false,
+					scaleControl : false, // 지도 축적 보여줄 것인지.
+					//scaleControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT },
+					mapTypeControl : false, // 지도,위성,하이브리드 등등 선택 컨트롤 보여줄 것인지
+					mapTypeId : google.maps.MapTypeId.ROADMAP // HYBRID, ROADMAP, SATELLITE, TERRAIN
+				};
+				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+				//현재 자신의 위치를 표시하기 위하여 지오로케이션 체크
+				if ("geolocation" in navigator) {
+					navigator.geolocation.getCurrentPosition(mylocation);
+				} else {
+
+				}
+				//맵 초기화를 윈폼으로 알림
+				window.external.MapInitalizeFinished();
+			}
+
+			function mylocation(position) {
+				alert("지오로케이션 진행");
+				var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				var myOptions = {
+					position : latlng,
+					draggable : false,
+					map : map,
+					label : "S",
+					//icon: image,
+					title : "Server",
+					visible : true
+				};
+				var marker = new google.maps.Marker(myOptions);
+			}
+
+			//일반적인 목적의 마커 표시 함수
+			function addCommonMarker(header, content, lat, lng, ip, address) {
+				var content = 
+					'<div id="iw-container" >' + 
+					'<div class="iw-title" id ="control_center" style = "background-color: #48b5e9;" >' + header + '</div>' + 
+					'<div class="iw-content">' + 
+						'<div class="iw-subTitle">Description</div>' + 
+						'<img src="http://img.yonhapnews.co.kr/etc/inner/KR/2016/05/06/AKR20160506066500009_01_i.jpg"  height="115" width="83">' + content + '<br/>' + '<br/>' + 
+						'<div class="iw-subTitle">Latitude , Longitude</div>' + lat + ' , ' + lng + '<br/>' + '<br/>' + 
+						'<div class="iw-subTitle">Address</div>' + address + '<br/>' + 
+						'</div>' + '<div class="iw-bottom-gradient"></div>' + '</div>';
+				var infowindow = new google.maps.InfoWindow({
+					content : content,
+					maxWidth : 400
+				});
+				infowindows.push(infowindow);
+				var myOptions = {
+					position : {
+						lat : lat,
+						lng : lng
+					},
+					draggable : false,
+					map : map,
+					//label : "R",
+					//icon: image,
+					title : header,
+					visible : true
+				};
+				var pinColor = "00bfFf|336633";
+				myOptions.icon = new google.maps.MarkerImage(
+					"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor, 
+					new google.maps.Size(25, 39), 
+					new google.maps.Point(0, 0), 
+					new google.maps.Point(10, 34), 
+					new google.maps.Size(25, 39));
+				var marker = new google.maps.Marker(myOptions);
+
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.open(map, marker);
+				});
+
+				google.maps.event.addListener(map, 'click', function() {
+					hideAllInfoWindows();
+					infowindow.close();
+				});
+
+				google.maps.event.addListener(infowindow, 'domready', function() {
+					var iwOuter = $('.gm-style-iw');
+					var iwBackground = iwOuter.prev();
+					iwBackground.children(':nth-child(2)').css({
+						'display' : 'none'
+					});
+					iwBackground.children(':nth-child(4)').css({
+						'display' : 'none'
+					});
+
+					iwOuter.parent().parent().css({
+						left : '115px'
+					});
+					iwBackground.children(':nth-child(1)').attr('style', function(i, s) {
+						return s + 'left: 76px !important;';
+					});
+					iwBackground.children(':nth-child(3)').attr('style', function(i, s) {
+						return s + 'left: 76px !important;';
+					});
+					iwBackground.children(':nth-child(3)').find('div').children().css({
+						'box-shadow' : 'rgba(72, 181, 233, 0.6) 0px 1px 6px',
+						'z-index' : '1'
+					});
+					var iwCloseBtn = iwOuter.next();
+					iwCloseBtn.css({
+						opacity : '0',
+						right : '38px',
+						top : '3px',
+						border : '7px solid #48b5e9',
+						'border-radius' : '13px',
+						'box-shadow' : '0 0 5px #3990B9',
+						display : 'none'
+					});
+					if ($('.iw-content').height() < 140) {
+						$('.iw-bottom-gradient').css({
+							display : 'none'
+						});
+					}
+					iwCloseBtn.hide();
+					iwCloseBtn.mouseout(function() {
+						//$(this).css({opacity: '0'});
+					});
+					iwCloseBtn.mouseout(function() {
+						$(this).css({
+							opacity : '0'
+						});
+					});
+
+					iwCloseBtn.click(function() {
+						window.external.RouterMapOut();
+					});
+				});
+
+			}
+			
+			//특정 세션 아이디를 가진 마커 오브젝트를 찾는다.
+			function findMapObject(session){
+				for (var i = 0 ; i <markerList.length; i++){
+					if (markerList[i].session == session){
+						return markerList[i];
+					}
+				}
+				return 0;
+			}
+			
+			function addMarker(latitude, longitude, routerName, des, serialNo, number, rssi, 
+				routerIp, lanIp, wanIp, firmVersion, nmsVersion, message, router_status){
+		    
+		    	var ipstr = lanIp == "" ? "" : lanIp + '(' + wanIp + ')';
+		    	var backColor = "";
+				var addContent = "";
+				var pinColor = "";
+				var iconPath = "";
+				
+		    	var myOptions = {
+					position : {
+						lat : parseFloat(latitude),
+						lng : parseFloat(longitude)
+					},
+					draggable : false,
+					map : map,
+					title : routerName,
+					visible : true
+				};
+				switch(router_status) {
+				case 0:
+					addContent = '<div class="iw-subTitle">Status</div>' + "normal" + '<br/><br/>';
+					backColor = "#54BD54";
+					var pinColor = "00CC00|336633";
+					iconPath = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor;
+					myOptions.icon = new google.maps.MarkerImage(
+						"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor, 
+						new google.maps.Size(25, 39), 
+						new google.maps.Point(0, 0), 
+						new google.maps.Point(10, 34), 
+						new google.maps.Size(25, 39));
+					break;
+					
+				case 1:
+					addContent += '<div class="iw-subTitle">Status</div>' + "Router Error" + '<br/><br/>';
+					backColor = "#CD1F48";
+					break;
+					
+				case 2:
+					backColor = "#FFAA28";
+					var pinColor = "FFA500|336633";
+					iconPath = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor;
+					myOptions.icon = new google.maps.MarkerImage(
+						"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor, 
+						new google.maps.Size(25, 39),
+						new google.maps.Point(0, 0), 
+						new google.maps.Point(10, 34), 
+						new google.maps.Size(25, 39));
+
+					addContent += '<div class="iw-subTitle">Status</div>' + "Alert" + '<br/>';
+					addContent += '<div class="iw-subTitle">Detail</div>' + message + '<br/>';
+					break;
+				}
+				
+		    	var content = 
+					'<div id="iw-container">' + 
+						'<div class="iw-title" style = "background-color: ' + backColor + ';">' + routerName + '</div>' + 
+						'<div class="iw-content">' + '<div class="iw-subTitle">Description</div>' + des + '<br/>' +
+						'<div class="iw-subTitle">Serial No</div>' + serialNo + '<br/>' + 
+						'<div class="iw-subTitle">Number</div>' + number + '<br/>' + 
+						'<div class="iw-subTitle">Router IP</div>' + routerIp + '<br/>' + 
+						'<div class="iw-subTitle">Lan IP(Wan IP)</div>' + ipstr + '<br/>' +
+						'<div class="iw-subTitle">Rssi Level</div>' + rssi + '<br/>' + 
+						'<div class="iw-subTitle">Firmware Version</div>' + firmVersion + '<br/>' + 
+						'<div class="iw-subTitle">NMS Version</div>' + nmsVersion + '<br/>';
+			
+						
+		    	content += addContent;
+				content += '</div>' + '<div class="iw-bottom-gradient"></div>' + '</div>';
+		    	
+		    	var markerObj = findMapObject(number);
+				
+				if (markerObj != 0){
+					//if (iconPath){
+						changeMarkerIcon(markerObj.marker, iconPath);
+					//}
+					updateInfowindowContent(markerObj.infowindow,content);
+				}else {
+					var infowindow = new google.maps.InfoWindow({
+						content : content,
+						maxWidth : 350
+					});
+					var marker = new google.maps.Marker(myOptions);
+					markerList.push(
+						{
+							session : number,
+							marker : marker,
+							infowindow : infowindow
+						}
+					);
+					
+					google.maps.event.addListener(marker, 'rightclick', function() {
+					window.external.CallDeviceConfig(serialNo);
+					});
+
+					google.maps.event.addListener(marker, 'click', function() {
+						window.external.RouterMapOver();
+						//hideAllInfoWindows();
+						infowindow.open(map, marker);
+					});
+	
+					google.maps.event.addListener(map, 'click', function() {
+						window.external.RouterMapOut();
+						hideAllInfoWindows();
+					});
+	
+					google.maps.event.addListener(infowindow, 'domready', function() {
+						var iwOuter = $('.gm-style-iw');
+						var iwBackground = iwOuter.prev();
+						iwBackground.children(':nth-child(2)').css({
+							'display' : 'none'
+						});
+						iwBackground.children(':nth-child(4)').css({
+							'display' : 'none'
+						});
+	
+						iwOuter.parent().parent().css({
+							left : '115px'
+						});
+						iwBackground.children(':nth-child(1)').attr('style', function(i, s) {
+							return s + 'left: 76px !important;';
+						});
+						iwBackground.children(':nth-child(3)').attr('style', function(i, s) {
+							return s + 'left: 76px !important;';
+						});
+						iwBackground.children(':nth-child(3)').find('div').children().css({
+							'box-shadow' : 'rgba(72, 181, 233, 0.6) 0px 1px 6px',
+							'z-index' : '1'
+						});
+						var iwCloseBtn = iwOuter.next();
+						iwCloseBtn.css({
+							opacity : '0',
+							right : '38px',
+							top : '3px',
+							border : '7px solid #48b5e9',
+							'border-radius' : '13px',
+							'box-shadow' : '0 0 5px #3990B9'
+						});
+						if ($('.iw-content').height() < 140) {
+							$('.iw-bottom-gradient').css({
+								display : 'none'
+							});
+						}
+						iwCloseBtn.mouseout(function() {
+							//$(this).css({opacity: '1'});
+						});
+						iwCloseBtn.click(function() {
+							window.external.RouterMapOut();
+						});
+						iwCloseBtn.hide();
+					});
+				}	
+			}
+			
+
+			function clearAllMarker(){
+				setMapOnAll(null);
+			}
+			
+			function hideInfowindow(infowindow){
+				infowindow.close();
+			}
+			
+			function hideAllInfoWindows(){
+				$.each(markerList, function(i, v){
+					hideInfowindow(v.infowindow);
+				});
+			}
+			
+			function clearAllMarkerAndInfowindow(){
+				hideAllInfoWindows();
+				setMapOnAll(null);
+				markerList.length = 0;
+			}
+		
+			// 마커 배열의 마커를 모두 숨김(마커배열은 유지)
+			function clearMarkers() {
+				setMapOnAll(null);
+			}
+			
+			//마커를 실제 맵에서 솜김
+			function setMapOnAll(map) {
+				for (var i = 0; i < markers.length; i++) {
+					markerList[i].marker.setMap(map);
+				}
+			}
+
+			// 마커 배열의 마커를 모두 표시
+			function showMarkers() {
+				setMapOnAll(map);
+			}
+
+			// 마커배열을 삭제하고, 맵의 마커를 모두 숨김
+			function deleteMarkers() {
+				clearMarkers();
+				markerList.length = 0;
+			}
+			
+			function changeMarkerIcon(marker, iconPath){
+				 marker.setIcon(iconPath); 
+			}
+			
+			//Infowindow 업데이트 
+			function updateInfowindowContent(infoWindow, content){
+ 			   infoWindow.setContent(content);
+			}
+
+			function setRouterStatusOnMap(totalRouterCnt, normalRouterCnt, abnormalRouterCnt, message) {
+				$("#total-cnt").html(totalRouterCnt);
+				$("#normal-cnt").html(normalRouterCnt);
+				$("#abnormal-cnt").html(abnormalRouterCnt);
+				$("#status-message").html(message);
+			}
+
+			// 마크좌표 가져오기
+			function getMarkPos(marker) {
+				var pos = marker.getPosition();
+				return {
+					x : pos.lat(),
+					y : pos.lng()
+				};
+			}
+
+			// 특정좌표로 이동하기
+			function setMapByCoord(x, y) {
+				var loc = new google.maps.LatLng(x, y);
+				map.setCenter(loc);
+			}
+
+			// 특정좌표로 애니메이션으로 이동하기
+			function setMapByCoordWithAnim(x, y) {
+				var loc = new google.maps.LatLng(x, y);
+				map.panTo(loc);
+				//map.setCenter(loc);
+			}
+		</script>
+	</head>
+	<style>
+		#map_container {
+			width: 100%;
+			height: 100%;
+		}
+
+		#target {
+			width: 345px;
+		}
+
+		#router_info_panel {
+			position: fixed;
+			padding-top: 10px;
+			padding-left: 10px;
+			padding-right: 10px;
+			padding-bottom: 10px;
+			left: 20px;
+			top: 20px;
+			width: 180px;
+			background-color: rgba( 0, 0, 0, 0.7 );
+			color: #eeeeee;
+			font: bold 8pt '맑은 고딕';
+			border-radius: 0.5em;
+			-moz-border-radius: 0.5em;
+			-webkit-border-radius: 0.5em;
+			-webkit-box-shadow: 10px 10px 20px -8px rgba(38,36,38,1);
+			-moz-box-shadow: 10px 10px 20px -8px rgba(38,36,38,1);
+			box-shadow: 10px 10px 20px -8px rgba(38,36,38,1);
+		}
+
+		#router_content {
+			color: #DDDDDD;
+			text-align: left;
+		}
+
+		#header {
+			font: normal 8pt '맑은 고딕';
+			color: cyan;
+		}
+
+		.mytable {
+			margin-top: 10px;
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		.mytable th, .mytable td {
+			border: 1px solid #DDDDDD;
+			text-align: center;
+			padding: 4px;
+		}
+
+		.t1 {
+			background-color: rgba(0, 0, 0, 0.5 );
+			color: #FFFFFF;
+			font: normal 9px '맑은 고딕';
+		}
+
+		.t2 {
+			background-color: rgba( 50, 50, 50, 0.5 );
+			font: normal 10px '굴림';
+			color: #FFFFFF;
+		}
+
+		.alert_detail {
+			margin-top: 7px;
+			padding: 10px;
+			background-color: rgba( 0,0,0, 0.3 );
+			font: normal 11px '굴림';
+			border-radius: 0.5em;
+			-moz-border-radius: 0.5em;
+			-webkit-border-radius: 0.5em;
+			color: #EEEEEE;
+			line-height: 1.5em;
+		}
+
+		#map-canvas img {
+			max-width: none !important;
+		}
+		.gm-style-iw {
+			width: 300px !important;
+			top: 15px !important;
+			left: 0px !important;
+			background-color: #fff;
+			border-radius: 2px 2px 10px 10px;
+			-webkit-box-shadow: 5px 5px 15px -3px rgba(0,0,0,1);
+			-moz-box-shadow: 5px 5px 15px -3px rgba(0,0,0,1);
+			box-shadow: 5px 5px 15px -3px rgba(0,0,0,1);
+		}
+		#iw-container {
+			margin-bottom: 10px;
+			width: 300px;
+			
+		}
+		#iw-container .iw-title {
+			font-family: 'Open Sans Condensed', sans-serif;
+			font-size: 14px;
+			font-weight: 400;
+			padding: 8px;
+			background-color: #48b5e9;
+			color: white;
+			margin: 0;
+			border-radius: 2px 2px 0 0;
+		}
+		#iw-container .iw-content {
+			font-size: 12px;
+			line-height: 15px;
+			font-weight: 200;
+			color: rgba(100,100,100,1);
+			margin-right: 1px;
+			padding: 5px 5px 20px 15px;
+			max-height: 440px;
+			overflow-y: hidden;
+			overflow-x: hidden;
+		}
+
+		.iw-content img {
+			float: right;
+			margin: 0 5px 5px 10px;
+		}
+		.iw-subTitle {
+			color: rgba(0,0,0,1);
+			font-size: 14px;
+			font-weight: 700;
+			padding: 5px 0;
+		}
+		.iw-bottom-gradient {
+			position: absolute;
+			width: 326px;
+			height: 25px;
+			bottom: 10px;
+			right: 18px;
+			background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+			background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+			background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+			background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+		}
+
+	</style>
+	<body onload="initialize(0,0)">
+		<div id ="map_container">
+			<div id="map_canvas"></div>
+		</div>
+		<div id ="router_info_panel">
+			<div>
+				<span id = "header"> ROUTER PANEL</span>
+				<span id ="folder-extender" style ="margin-left : 45%"> ▼</span>
+			</div>
+			<div id ="router_content" style = "margin-top: 6px">
+				<div>
+					<table class="mytable">
+						<tr>
+							<td class = "t1" style ="width : 70%;text-align: left;padding-left : 30px;">TOTAL</td>
+							<td class = "t2" id = "total-cnt" ></td>
+						</tr>
+						<tr>
+							<td class = "t1" style ="width : 70%;text-align: left;padding-left : 30px;" >NORMAL</td>
+							<td class = "t2" id = "normal-cnt"></td>
+						</tr>
+						<tr>
+							<td class = "t1" style ="width : 70%;text-align: left;padding-left : 30px;">ABNORMAL</td>
+							<td class = "t2" id = "abnormal-cnt"></td>
+						</tr>
+					</table>
+				</div>
+				<div style ="padding-top: 5px" class = "alert_detail" id ="status-message"></div>
+			</div>
+		</div>
+	</body>
+</html>

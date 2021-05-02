@@ -1,0 +1,56 @@
+﻿빌드 시작: 2016-01-15 오후 10:10:55
+     1>3 노드의 "F:\Project\CelotSolution\CelotNetworkMangerService\CelotNetworkMangerService.vcxproj" 프로젝트(Rebuild 대상)입니다.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Release\CelotNetworkMangerService.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\CelotNetworkMangerService.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CelotNetworkMangerService.cpp CircularQueue.cpp ClientSession.cpp Crypt.cpp EventSelect.cpp Iocp.cpp NetworkSession.cpp PacketSession.cpp Service.cpp Stream.cpp
+         CelotNetworkMangerService.cpp
+         CircularQueue.cpp
+     1>CircularQueue.cpp(102): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(195) : 'strncpy' 선언을 참조하십시오.
+     1>CircularQueue.cpp(132): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(195) : 'strncpy' 선언을 참조하십시오.
+     1>CircularQueue.cpp(225): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(195) : 'strncpy' 선언을 참조하십시오.
+     1>CircularQueue.cpp(252): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(195) : 'strncpy' 선언을 참조하십시오.
+         ClientSession.cpp
+         Crypt.cpp
+         EventSelect.cpp
+         Iocp.cpp
+         NetworkSession.cpp
+     1>NetworkSession.cpp(589): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : 'strcpy' 선언을 참조하십시오.
+     1>NetworkSession.cpp(652): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : 'strcpy' 선언을 참조하십시오.
+     1>NetworkSession.cpp(763): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : 'strcpy' 선언을 참조하십시오.
+         PacketSession.cpp
+     1>PacketSession.cpp(196): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : 'strcpy' 선언을 참조하십시오.
+         Service.cpp
+     1>Service.cpp(89): warning C4996: 'wcscat': This function or variable may be unsafe. Consider using wcscat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\wchar.h(1034) : 'wcscat' 선언을 참조하십시오.
+     1>Service.cpp(165): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\wchar.h(1042) : 'wcscpy' 선언을 참조하십시오.
+         Stream.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Project\CelotSolution\Release\CelotNetworkMangerService.exe" /INCREMENTAL:NO /NOLOGO ws2_32.lib Mswsock.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"F:\Project\CelotSolution\Release\CelotNetworkMangerService.pdb" /SUBSYSTEM:CONSOLE /STACK:"10485760" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Project\CelotSolution\Release\CelotNetworkMangerService.lib" /MACHINE:X86 /SAFESEH Release\CelotNetworkMangerService.obj
+         Release\CircularQueue.obj
+         Release\ClientSession.obj
+         Release\Crypt.obj
+         Release\EventSelect.obj
+         Release\Iocp.obj
+         Release\NetworkSession.obj
+         Release\PacketSession.obj
+         Release\Service.obj
+         Release\stdafx.obj
+         Release\Stream.obj
+         코드를 생성하고 있습니다.
+         코드를 생성했습니다.
+         CelotNetworkMangerService.vcxproj -> F:\Project\CelotSolution\Release\CelotNetworkMangerService.exe
+     1>"F:\Project\CelotSolution\CelotNetworkMangerService\CelotNetworkMangerService.vcxproj" 프로젝트를 빌드했습니다(Rebuild 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:02.08

@@ -1,0 +1,70 @@
+﻿빌드 시작: 2016-05-09 오후 11:01:21
+     1>4 노드의 "F:\new_celot_project\CelotSolution\CelotNetworkMangerService\CelotNetworkMangerService.vcxproj" 프로젝트(Rebuild 대상)입니다.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(381,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (C-Cloud Service.vcxproj, CelotNetworkMangerService.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _CRT_NON_CONFORMING_SWPRINTFS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"x64\Release\C-CloudService.pch" /Fo"x64\Release\\" /Fd"x64\Release\vc120.pdb" /Gd /TP /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D _CRT_NON_CONFORMING_SWPRINTFS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"x64\Release\C-CloudService.pch" /Fo"x64\Release\\" /Fd"x64\Release\vc120.pdb" /Gd /TP /errorReport:prompt CcloudService.cpp CircularQueue.cpp CelotSession.cpp CelotSessionManager.cpp Device.cpp DeviceManager.cpp EventSelect.cpp CelotIocp.cpp IniFile.cpp BaseIocp.cpp Logger.cpp Mysql.cpp NetworkSession.cpp NMSAlertCheck.cpp NmsPacketSession.cpp Stream.cpp Util.cpp
+         CcloudService.cpp
+     1>f:\new_celot_project\celotsolution\celotnetworkmangerservice\Device.h(56): warning C4244: '=' : 'int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+         CircularQueue.cpp
+         CelotSession.cpp
+         CelotSessionManager.cpp
+         Device.cpp
+     1>f:\new_celot_project\celotsolution\celotnetworkmangerservice\Device.h(56): warning C4244: '=' : 'int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>Device.cpp(33): warning C4553: '==' : 의미 없는 연산자입니다. '='을(를) 사용하려고 했습니까?
+         DeviceManager.cpp
+     1>f:\new_celot_project\celotsolution\celotnetworkmangerservice\Device.h(56): warning C4244: '=' : 'int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>DeviceManager.cpp(89): warning C4244: '인수' : 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>DeviceManager.cpp(90): warning C4244: '인수' : 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+         EventSelect.cpp
+         CelotIocp.cpp
+     1>f:\new_celot_project\celotsolution\celotnetworkmangerservice\Device.h(56): warning C4244: '=' : 'int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+         IniFile.cpp
+         BaseIocp.cpp
+         Logger.cpp
+         Mysql.cpp
+     1>Mysql.cpp(209): warning C4800: 'my_bool' : 'true' 또는 'false'로 bool 값을 강제하고 있습니다(성능 경고).
+     1>Mysql.cpp(318): warning C4244: 'return' : 'my_ulonglong'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+         NetworkSession.cpp
+         NMSAlertCheck.cpp
+     1>f:\new_celot_project\celotsolution\celotnetworkmangerservice\Device.h(56): warning C4244: '=' : 'int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>NMSAlertCheck.cpp(107): warning C4018: '<=' : signed 또는 unsigned가 일치하지 않습니다.
+         NmsPacketSession.cpp
+     1>NmsPacketSession.cpp(92): warning C4018: '<' : signed 또는 unsigned가 일치하지 않습니다.
+         Stream.cpp
+         Util.cpp
+     1>Util.cpp(21): warning C4267: '인수' : 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>Util.cpp(23): warning C4267: '인수' : 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>Util.cpp(39): warning C4267: '인수' : 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>Util.cpp(42): warning C4267: '인수' : 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"x64\Release\CelotNetworkMangerService.res" CelotNetworkMangerService.rc 
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"F:\new_celot_project\CelotSolution\x64\Release\C-CloudService.exe" /INCREMENTAL:NO /NOLOGO ws2_32.lib Mswsock.lib libmysql.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"F:\new_celot_project\CelotSolution\x64\Release\C-CloudService.pdb" /SUBSYSTEM:CONSOLE /STACK:"10485760" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\new_celot_project\CelotSolution\x64\Release\C-CloudService.lib" /MACHINE:X64 x64\Release\CelotNetworkMangerService.res
+         x64\Release\CcloudService.obj
+         x64\Release\CircularQueue.obj
+         x64\Release\CelotSession.obj
+         x64\Release\CelotSessionManager.obj
+         x64\Release\Device.obj
+         x64\Release\DeviceManager.obj
+         x64\Release\EventSelect.obj
+         x64\Release\CelotIocp.obj
+         x64\Release\IniFile.obj
+         x64\Release\BaseIocp.obj
+         x64\Release\Logger.obj
+         x64\Release\Mysql.obj
+         x64\Release\NetworkSession.obj
+         x64\Release\NMSAlertCheck.obj
+         x64\Release\NmsPacketSession.obj
+         x64\Release\stdafx.obj
+         x64\Release\Stream.obj
+         x64\Release\Util.obj
+         코드를 생성하고 있습니다.
+         코드를 생성했습니다.
+         CelotNetworkMangerService.vcxproj -> F:\new_celot_project\CelotSolution\x64\Release\C-CloudService.exe
+     1>"F:\new_celot_project\CelotSolution\CelotNetworkMangerService\CelotNetworkMangerService.vcxproj" 프로젝트를 빌드했습니다(Rebuild 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:03.91

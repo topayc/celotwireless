@@ -1,0 +1,9 @@
+[2016-1-31 17:29:59] # New client connected : 0x873f0040(0x938)
+
+[2016-1-31 17:29:59] # Client disconnected : 0x873f0040(0x968)
+
+[2016-1-31 17:29:59] # New client connected : 0x86ff0040(0x934)
+
+[2016-1-31 17:29:59] # Client disconnected : 0x86ff0040(0x978)
+
+[2016-1-31 17:29:59] ! OnIoConnected : CIocp::RegisterSocketToIocp

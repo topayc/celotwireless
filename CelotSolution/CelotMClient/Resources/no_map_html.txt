@@ -1,0 +1,71 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
+<title>Google Map</title>
+
+<script type="text/javascript" 
+    src="http://maps.google.com/maps/api/js?sensor=false&region=KR"> 
+</script>
+<script>
+	function getNoMapImage(){
+		window.external.GetNoMapImage();
+	}
+	
+	function setNoMapImage(path){
+		//var width = document.body.clientWidth 
+		//var height = document.body.clientHeight // (창의 크기)
+		//document.getElementById('no_map').style.width= width + "px";
+		//document.getElementById('no_map').style.height = height + "px";
+		document.getElementById("no_map").src = path;
+	}
+</script>
+
+	<style>
+		body {
+		  background-color: #e9e9e9;
+		}
+
+		#no_map  {
+			position: absolute;
+			top: 100px;
+			left : 45%;
+			 -webkit-border-radius:50%;
+			 -moz-border-radius:50%;
+			 -ms-border-radius:50%;
+			 border-radius:50%;
+			 animation: bounce 2s infinite;
+			 -webkit-animation: bounce 2s infinite;
+			 -moz-animation: bounce 2s infinite;
+			 -o-animation: bounce 2s infinite;
+			}
+ 
+			@-webkit-keyframes bounce {
+			 0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);} 
+			 40% {-webkit-transform: translateY(-30px);}
+			 60% {-webkit-transform: translateY(-15px);}
+			}
+ 
+			@-moz-keyframes bounce {
+			 0%, 20%, 50%, 80%, 100% {-moz-transform: translateY(0);}
+			 40% {-moz-transform: translateY(-30px);}
+			 60% {-moz-transform: translateY(-15px);}
+			}
+ 
+			@-o-keyframes bounce {
+			 0%, 20%, 50%, 80%, 100% {-o-transform: translateY(0);}
+			 40% {-o-transform: translateY(-30px);}
+			 60% {-o-transform: translateY(-15px);}
+			}
+			@keyframes bounce {
+			 0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+			 40% {transform: translateY(-30px);}
+			 60% {transform: translateY(-15px);}
+			}
+	</style>
+</head> 
+
+<body id ="container" onload ="getNoMapImage()">
+	<img   id ="no_map" src ="" />
+ </body> 
+</html>

@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CelotMClient.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="UpdatePeriod" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10000</Value>
+    </Setting>
+    <Setting Name="LowBatteryLimit" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="ConcurrentDownloadCount" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="DatabaseHost" Type="System.String" Scope="User">
+      <Value Profile="(Default)">54.238.190.58</Value>
+    </Setting>
+    <Setting Name="DatabaseName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">celot_db</Value>
+    </Setting>
+    <Setting Name="DatabaseId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">root</Value>
+    </Setting>
+    <Setting Name="DatabasePassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">a98310</Value>
+    </Setting>
+    <Setting Name="DatabaseCharset" Type="System.String" Scope="User">
+      <Value Profile="(Default)">utf8</Value>
+    </Setting>
+    <Setting Name="Latitude" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">37.51121</Value>
+    </Setting>
+    <Setting Name="Longitude" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">127.019539</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
